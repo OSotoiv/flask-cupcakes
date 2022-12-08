@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container col-4 mb-3">
+    <form id="CupcakeForm">
+        {{ form.hidden_tag() }}
+
+        {%for field in form if field.widget.input_type != 'hidden'%}
+        <div class="mb-3">
+            {{field.label(class_='form-label')}}
+            {{field(class_="form-control")}}
+            {% for error in field.errors %}
+            <p class="text-danger">
+                {{error}}
+            </p>
+            {% endfor%}
+        </div>
+        {% endfor %}
+        <button class="btn btn-primary" type="submit">Add Cupcake</button>
+    </form>
+</div>
+
+<div class="container">
+    <div class="row" id="cupcakeContainer">
+        {% for cupcake in all_cupcakes %}
+        <div class="card mx-2 mb-2" style="width: 18rem;">
+            <img src="{{cupcake.image}}" class="img-thumbnail" alt="...">
+            <div class="card-body">
+                <h4 class="card-title">{{cupcake.flavor}}</h4>
+                <ul class="ps-3">
+                    <li>Size: <span class="text-secondary fw-bold">{{cupcake.size}}</span></li>
+                    <li>Rating: <span class="text-secondary fw-bold">{{cupcake.rating}}</span></li>
+                </ul>
+                <a href="/cupcake/{{cupcake.id}}" class="btn btn-info">Info</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
