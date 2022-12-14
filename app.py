@@ -8,7 +8,7 @@ from form import Cupcake_form
 from env_keys import env_secrets
 
 app = Flask(__name__)
-# app.app_context().push()
+app.app_context().push()
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///cupcakes'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
