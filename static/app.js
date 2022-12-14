@@ -8,7 +8,8 @@ $CupcakeForm.submit(submit_New_Cupcake);
 const $updateCupcakeForm = $("#updateCupcakeForm")
 $updateCupcakeForm.submit(submit_Updated_Cupcake)
 
-// form elements
+// form input elements
+// once you have these input elements selected you can change the id on the UI but you still have access to the inputs
 const $flavor = $("#flavor");
 const $size = $("#size");
 const $rating = $("#rating");
@@ -16,6 +17,7 @@ const $image = $("#image");
 const $token = $("#csrf_token")
 
 function getFormData() {
+    // return dict of input vals selected by jQuery
     return {
         csrf_token: $token.val(),
         flavor: $flavor.val(),
@@ -28,7 +30,12 @@ function getFormData() {
 async function submit_New_Cupcake(event) {
     event.preventDefault();
     formData = getFormData();
+    console.log(formData)
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // needs error handling for res comming back as html
     res = await axios.post("http://127.0.0.1:5000/", data = formData);
+    console.log(res)
+    // if user removes required attribute from html input. server will send back html page. not json
     const $cupcakeElement = buildNew_CupcakeElement(res.data.cupcake);
     appendCupcake($cupcakeElement)
 
@@ -70,11 +77,11 @@ function buildNew_CupcakeElement(cupcake) {
             <div class="card-body">
             <h4 class="card-title">${cupcake.flavor}</h4>
             <ul class="ps-3">
-                <li>Size: <span class="text-info fw-bold">${cupcake.size}</span></li>
-                <li>Rating: <span class="text-info fw-bold">${cupcake.rating}</span></li>
+                <li>Size: <span class="text-secondary fw-bold">${cupcake.size}</span></li>
+                <li>Rating: <span class="text-secondary fw-bold">${cupcake.rating}</span></li>
                 <li>test</li>
             </ul>
-            <a href="/cupcake/${cupcake.id}" class="btn btn-secondary">Info</a>
+            <a href="/cupcake/${cupcake.id}" class="btn btn-info">Info</a>
             </div>
             </div>`)
 }
